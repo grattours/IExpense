@@ -5,6 +5,7 @@
 //  Created by Luc Derosne on 29/10/2019.
 //  Copyright © 2019 Luc Derosne. All rights reserved.
 //
+// IEExpense Wrapup J38
 
 import SwiftUI
 
@@ -57,14 +58,15 @@ struct ContentView: View {
                         }
                 
                         Spacer()
-                        Text("$\(item.amount)")
+                        self.itemStyle(amount: item.amount)
+                        //Text("$\(item.amount)")
                     }
                 }
 
                 .onDelete(perform: removeItems)
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading: EditButton(), trailing:
                 Button(action: {
                     self.showingAddExpense = true
                 }) {
@@ -83,6 +85,17 @@ struct ContentView: View {
         }
 
     }
+    func itemStyle(amount: Int) -> Text {
+        if amount < 10 {
+            return Text("$\(amount)").foregroundColor(.green)
+            
+        } else if amount > 100 {
+            return Text("$\(amount)").foregroundColor(.red)
+        } else {
+            return Text("$\(amount)").foregroundColor(.blue)
+        }
+    }
+    
     
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
